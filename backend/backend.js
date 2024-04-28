@@ -65,8 +65,6 @@ app.post("/listProducts", async (req, res) => {
       description: req.body.description,
       category: req.body.category,
       image: req.body.image,
-      rate: req.body.rating.rate,
-      count: req.body.rating.count,
     };
     console.log(newDocument);
 
@@ -81,7 +79,7 @@ app.post("/listProducts", async (req, res) => {
   }
 });
 
-app.delete("/deleteProduct/:id", async (req, res) => {
+app.delete("/listProducts/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
     await client.connect();
@@ -129,38 +127,6 @@ app.put("/listProducts/:id", async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
-
-// app.put("/listProducts/:id", async (req, res) => {
-//   const id = Number(req.params.id);
-//   const query = { id: id };
-//   await client.connect();
-//   console.log("Robot to Update :", id);
-//   // Data for updating the document, typically comes from the request body
-//   console.log(req.body);
-//   const updateData = {
-//     $set: {
-//       "name": req.body.name,
-//       "price": req.body.price,
-//       "description": req.body.description,
-//       "imageUrl": req.body.imageUrl,
-//     },
-//   };
-//   // read data from robot to update to send to frontend
-//   const robotUpdated = await db.collection("robot").findOne(query);
-//   res.send(robotUpdated);
-//   // If no document was found to update, you can choose to handle it by sending a 404
-//   response;
-//   if (results.matchedCount === 0) {
-//     return res.status(404).send({ message: "Robot not found" });
-//   }
-//   // Add options if needed, for example { upsert: true } to create a document if it doesn't exist
-//   const options = {};
-//   const results = await db
-//     .collection("robot")
-//     .updateOne(query, updateData, options);
-//   res.status(200);
-//   res.send(results);
-// });
 
 app.listen(port, () => {
   console.log("App listening at http://%s:%s", host, port);

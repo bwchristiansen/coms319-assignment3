@@ -1,4 +1,3 @@
-//
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -25,18 +24,79 @@ function App() {
     }, []);
     return (
       <div>
-        {/* Buttons to show CRUD */}
-        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
-        <button onClick={() => navigate("/postcatalog")}>
-          POST a new Item
-        </button>
-        <button onClick={() => navigate("/putcatalog")}>
-          PUT (modify) an Item
-        </button>
-        <button onClick={() => navigate("/deletecatalog")}>
-          DELETE an Item
-        </button>
-        {/* Show all products using map */}
+        {/* Bootstrap CSS link */}
+        <link
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossOrigin="anonymous"
+        />
+
+        {/* Your navigation bar */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container">
+            {/* Navbar brand */}
+            <h1 className="navbar-brand">FakeStore Catalog</h1>
+
+            {/* Navbar toggler */}
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            {/* Navbar items */}
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/getcatalog")}
+                  >
+                    GET Catalog
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/postcatalog")}
+                  >
+                    POST a new Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/putcatalog")}
+                  >
+                    PUT (modify) an Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/deletecatalog")}
+                  >
+                    DELETE an Item
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        {/* Delete Product section */}
+        <div className="form-inline">
+          <h3 className="mr-2">All Products</h3>
+        </div>
         {products.map((el) => (
           <div key={el.id}>
             <img src={el.image} alt="product" width={30} />
@@ -44,9 +104,25 @@ function App() {
             <div>Title: {el.title}</div>
             <div>Category: {el.category}</div>
             <div>Price: {el.price}</div>
-            {/* <div>Rating: {el.rating}</div> */}
           </div>
         ))}
+
+        {/* Bootstrap JS link */}
+        <script
+          src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+          integrity="sha384-b28gs2QG7Nq7uSl5/gK/cIa6nc6FgaQ8+9z1bWp2fGtlj1kWCc9/NdC3Jz1VaZXp"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC1N+3Ehx6jB8EhFQh6KvALe6usOJqdmBk4W"
+          crossOrigin="anonymous"
+        ></script>
       </div>
     );
   };
@@ -64,7 +140,6 @@ function App() {
       description: "",
       category: "",
       image: "",
-      rating: "",
     });
 
     // Handles new Products
@@ -106,22 +181,83 @@ function App() {
     //return
     return (
       <div>
-        {/* Buttons to show CRUD */}
-        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
-        <button onClick={() => navigate("/postcatalog")}>
-          POST a new Item
-        </button>
-        <button onClick={() => navigate("/putcatalog")}>
-          PUT (modify) an Item
-        </button>
-        <button onClick={() => navigate("/deletecatalog")}>
-          DELETE an Item
-        </button>
-        {/* Form to input data */}
-        <form onSubmit={handleSubmit}>
-          <h1>Post a New Product</h1>
+        {/* Bootstrap CSS link */}
+        <link
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossOrigin="anonymous"
+        />
+
+        {/* Your navigation bar */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container">
+            {/* Navbar brand */}
+            <h1 className="navbar-brand">FakeStore Catalog</h1>
+
+            {/* Navbar toggler */}
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            {/* Navbar items */}
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/getcatalog")}
+                  >
+                    GET Catalog
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/postcatalog")}
+                  >
+                    POST a new Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/putcatalog")}
+                  >
+                    PUT (modify) an Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/deletecatalog")}
+                  >
+                    DELETE an Item
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        {/* Delete Product section */}
+        <div className="form-inline">
+          <h3 className="mr-2">Post New Product</h3>
+        </div>
+        <form onSubmit={handleSubmit} className="form-inline">
           <input
-            type="text"
+            type="number"
+            className="form-control mr-2"
             name="id"
             value={addNewProduct.id}
             onChange={handleChange}
@@ -131,6 +267,7 @@ function App() {
           <br />
           <input
             type="text"
+            className="form-control mr-2"
             name="title"
             value={addNewProduct.title}
             onChange={handleChange}
@@ -139,7 +276,8 @@ function App() {
           />{" "}
           <br />
           <input
-            type="text"
+            type="number"
+            className="form-control mr-2"
             name="price"
             value={addNewProduct.price}
             onChange={handleChange}
@@ -149,6 +287,7 @@ function App() {
           <br />
           <input
             type="text"
+            className="form-control mr-2"
             name="description"
             value={addNewProduct.description}
             onChange={handleChange}
@@ -158,6 +297,7 @@ function App() {
           <br />
           <input
             type="text"
+            className="form-control mr-2"
             name="category"
             value={addNewProduct.category}
             onChange={handleChange}
@@ -167,6 +307,7 @@ function App() {
           <br />
           <input
             type="text"
+            className="form-control mr-2"
             name="image"
             value={addNewProduct.image}
             onChange={handleChange}
@@ -174,31 +315,44 @@ function App() {
             required
           />{" "}
           <br />
-          {/* <input
-            type="text"
-            name="rating"
-            value={formData.rating}
-            onChange={handleChange}
-            placeholder="Rating"
-            required
-          />{" "}
-          <br /> */}
-          <button type="submit">Submit</button>
+          <button className="btn btn-danger" type="submit">
+            Submit
+          </button>
         </form>
+
+        {/* Bootstrap JS link */}
+        <script
+          src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+          integrity="sha384-b28gs2QG7Nq7uSl5/gK/cIa6nc6FgaQ8+9z1bWp2fGtlj1kWCc9/NdC3Jz1VaZXp"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC1N+3Ehx6jB8EhFQh6KvALe6usOJqdmBk4W"
+          crossOrigin="anonymous"
+        ></script>
       </div>
     );
   };
+
   //
   // PUT item
   //
   const Putcatalog = () => {
     // Define hooks
-    const [id, setId] = useState("");
+    // const [id, setId] = useState("");
     const [updatedData, setUpdatedData] = useState({});
     const navigate = useNavigate();
 
     // Function to handle PUT request
-    const handleUpdate = () => {
+    function handleUpdate() {
+      let id = document.getElementById("updateProductbyId").value;
+      console.log(id);
       fetch(`http://localhost:8081/listProducts/${id}`, {
         method: "PUT",
         headers: {
@@ -219,69 +373,145 @@ function App() {
           console.error("Error updating data:", error);
           alert("Error updating product:" + error.message);
         });
-    };
+    }
 
     // Return
     return (
       <div>
-        {/* Buttons to show CRUD */}
-        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
-        <button onClick={() => navigate("/postcatalog")}>
-          POST a new Item
-        </button>
-        <button onClick={() => navigate("/putcatalog")}>
-          PUT (modify) an Item
-        </button>
-        <button onClick={() => navigate("/deletecatalog")}>
-          DELETE an Item
-        </button>
-        <br />
-        <input
-          type="text"
-          placeholder="Enter ID"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+        {/* Bootstrap CSS link */}
+        <link
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossOrigin="anonymous"
         />
-        <br />
-        {/* Input fields to update data */}
-        <input
-          type="text"
-          placeholder="Update Title"
-          onChange={(e) =>
-            setUpdatedData({ ...updatedData, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Update Category"
-          onChange={(e) =>
-            setUpdatedData({ ...updatedData, category: e.target.value })
-          }
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Update Price"
-          onChange={(e) =>
-            setUpdatedData({ ...updatedData, price: e.target.value })
-          }
-        />
-        {/* <input
-          type="text"
-          placeholder="Update Rating"
-          onChange={(e) =>
-            setUpdatedData({ ...updatedData, rating: e.target.value })
-          }
-        />
-        <br /> */}
-        <button onClick={handleUpdate}>Update Item</button>
+
+        {/* Your navigation bar */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container">
+            {/* Navbar brand */}
+            <h1 className="navbar-brand">FakeStore Catalog</h1>
+
+            {/* Navbar toggler */}
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            {/* Navbar items */}
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/getcatalog")}
+                  >
+                    GET Catalog
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/postcatalog")}
+                  >
+                    POST a new Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/putcatalog")}
+                  >
+                    PUT (modify) an Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/deletecatalog")}
+                  >
+                    DELETE an Item
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        {/* Update Product section */}
+        <div className="form-inline">
+          <h3 className="mr-2">Update Product</h3>
+        </div>
+        <div className="form-inline">
+          <br />
+          <input
+            type="number"
+            className="form-control mr-2"
+            id="updateProductbyId"
+            placeholder="Enter ID"
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Update Title"
+            className="form-control mr-2"
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, title: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Update Category"
+            className="form-control mr-2"
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, category: e.target.value })
+            }
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Update Price"
+            className="form-control mr-2"
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, price: e.target.value })
+            }
+          />
+          <button className="btn btn-danger" onClick={handleUpdate}>
+            Update Item
+          </button>
+        </div>
+        {/* Bootstrap JS link */}
+        <script
+          src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+          integrity="sha384-b28gs2QG7Nq7uSl5/gK/cIa6nc6FgaQ8+9z1bWp2fGtlj1kWCc9/NdC3Jz1VaZXp"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC1N+3Ehx6jB8EhFQh6KvALe6usOJqdmBk4W"
+          crossOrigin="anonymous"
+        ></script>
       </div>
     );
   };
+
   //
   // DELETE - Delete an item
   //
-
   const Deletecatalog = () => {
     const [delProd, setDeleteProduct] = useState([]);
     const navigate = useNavigate();
@@ -290,7 +520,7 @@ function App() {
       // Fetch the value from the input field
       let id = document.getElementById("deleteProductbyId").value;
       console.log(id);
-      fetch(`http://localhost:8081/deleteProduct/${id}`, {
+      fetch(`http://localhost:8081/listProducts/${id}`, {
         method: "DELETE",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ id: id }),
@@ -303,34 +533,106 @@ function App() {
     // return
     return (
       <div>
-        {/* Buttons to show CRUD */}
-        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
-        <button onClick={() => navigate("/postcatalog")}>
-          POST a new Item
-        </button>
-        <button onClick={() => navigate("/putcatalog")}>
-          PUT (modify) an Item
-        </button>
-        <button onClick={() => navigate("/deletecatalog")}>
-          DELETE an Item
-        </button>
-        {/* Buttons to simulate carousel */}
-        {/* <h3>Delete one product:</h3>
-        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button onClick={() => getOneByOneProductNext()}>Next</button>
-        <button onClick={() => deleteOneProduct(products[index].id)}>
-          Delete
-        </button> */}
-        {/* Show product properties, one by one */}
-        <div>
-          <h3>Delete Product</h3>
+        {/* Bootstrap CSS link */}
+        <link
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossOrigin="anonymous"
+        />
+
+        {/* Your navigation bar */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container">
+            {/* Navbar brand */}
+            <h1 className="navbar-brand">FakeStore Catalog</h1>
+
+            {/* Navbar toggler */}
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            {/* Navbar items */}
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/getcatalog")}
+                  >
+                    GET Catalog
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/postcatalog")}
+                  >
+                    POST a new Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/putcatalog")}
+                  >
+                    PUT (modify) an Item
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-link nav-link"
+                    onClick={() => navigate("/deletecatalog")}
+                  >
+                    DELETE an Item
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        {/* Delete Product section */}
+        <div className="form-inline">
+          <h3 className="mr-2">Delete Product</h3>
+        </div>
+        <div className="form-inline">
           <input
             type="number"
+            className="form-control mr-2"
             id="deleteProductbyId"
             placeholder="Enter Product ID"
           />
-          <button onClick={() => deleteProduct()}>Delete Product</button>
+          <button className="btn btn-danger" onClick={() => deleteProduct()}>
+            Delete Product
+          </button>
         </div>
+        {/* Bootstrap JS link */}
+        <script
+          src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+          integrity="sha384-b28gs2QG7Nq7uSl5/gK/cIa6nc6FgaQ8+9z1bWp2fGtlj1kWCc9/NdC3Jz1VaZXp"
+          crossOrigin="anonymous"
+        ></script>
+        <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC1N+3Ehx6jB8EhFQh6KvALe6usOJqdmBk4W"
+          crossOrigin="anonymous"
+        ></script>
       </div>
     );
   };
