@@ -1,289 +1,349 @@
+//
 import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 function App() {
-  const [product, setProduct] = useState([]);
-  const [oneProduct, setOneProduct] = useState([]);
-  const [oneCategory, setCategory] = useState([]);
-  const [delProd, deleteProduct] = useState([]);
+  //
+  // GET all items
+  //
+  const Getcatalog = () => {
+    // Define hooks
+    const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
+    // useEffect to load products when load page
+    useEffect(() => {
+      fetch("http://localhost:8081/listProducts")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Show Catalog of Products :", data);
+          setProducts(data);
+        });
+    }, []);
+    return (
+      <div>
+        {/* Buttons to show CRUD */}
+        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
+        <button onClick={() => navigate("/postcatalog")}>
+          POST a new Item
+        </button>
+        <button onClick={() => navigate("/putcatalog")}>
+          PUT (modify) an Item
+        </button>
+        <button onClick={() => navigate("/deletecatalog")}>
+          DELETE an Item
+        </button>
+        {/* Show all products using map */}
+        {products.map((el) => (
+          <div key={el.id}>
+            <img src={el.image} alt="product" width={30} />
+            <div>ID: {el.id}</div>
+            <div>Title: {el.title}</div>
+            <div>Category: {el.category}</div>
+            <div>Price: {el.price}</div>
+            {/* <div>Rating: {el.rating}</div> */}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
-  // new Product
-  const [addNewProduct, setAddNewProduct] = useState({
-    id: 0,
-    title: "",
-    price: 0.0,
-    description: "",
-    category: "",
-    image: "",
-    rating: 0.0,
-  });
+  //
+  // POST a new item
+  //
+  const Postcatalog = () => {
+    // Define HOOKS
+    const navigate = useNavigate();
+    const [addNewProduct, setAddNewProduct] = useState({
+      id: "",
+      title: "",
+      price: "",
+      description: "",
+      category: "",
+      image: "",
+      rating: "",
+    });
 
-  const [viewer1, setViewer1] = useState(false);
-  const [viewer2, setViewer2] = useState(false);
-  const [viewer3, setViewer3] = useState(false);
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-  function getAllProducts() {
-    fetch("http://localhost:8081/listProducts")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Show Catalog of Products :");
-        console.log(data);
-        setProduct(data);
-      });
-    setViewer1(!viewer1);
-  }
-
-  const showAllItems = product.map((el) => (
-    <div key={el.id}>
-      <img src={el.image} width={30} alt="images" /> <br />
-      Title: {el.title} <br />
-      Category: {el.category} <br />
-      Price: {el.price} <br />
-    </div>
-  ));
-
-  // function getOneProduct(id) {
-  //   console.log(id);
-  //   if (id >= 1 && id <= 20) {
-  //     fetch("http://127.0.0.1:4000/catalog/" + id)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log("Show one product :", id);
-  //         console.log(data);
-  //         setOneProduct(data);
-  //       });
-  //     if (false === viewer2) setViewer2(true);
-  //   } else {
-  //     console.log("Wrong number of Product id.");
-  //   }
-  // }
-
-  // const showOneItem = oneProduct.map((el) => (
-  //   <div key={el.id}>
-  //     <img src={el.image} width={30} alt="images" /> <br />
-  //     Title: {el.title} <br />
-  //     Category: {el.category} <br />
-  //     Price: {el.price} <br />
-  //     Rating: {el.rating} <br />
-  //   </div>
-  // ));
-
-  // function getCategory(category) {
-  //   console.log(category);
-  //   fetch("http://127.0.0.1:4000/catalog/" + category)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("Show category :", category);
-  //       console.log(data);
-  //       setCategory(data);
-  //     });
-  //   if (false === viewer3) setViewer3(true);
-  // }
-
-  // const showCategory = oneCategory.map((el) => (
-  //   <div key={el.category}>
-  //     <img src={el.image} width={30} alt="images" /> <br />
-  //     Title: {el.title} <br />
-  //     Category: {el.category} <br />
-  //     Price: {el.price} <br />
-  //     Rating: {el.rating} <br />
-  //   </div>
-  // ));
-
-  
-  function newProduct() {
-    fetch("http://localhost:8081/", {
+    // Handles new Products
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setAddNewProduct((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
+    // Function to fetch backend for POST - it sends data in BODY
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(e.target.value);
+      fetch("http://localhost:8081/listProducts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            id: 99,
-            title: "Robot Abraham ALDACO-GASTELUM",
-            price: 100.9,
-            description: "I robot is one example of an image for my exercise",
-            category: "hello",
-            image: "https://robohash.org/Abraham",
-        }),
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then((addNewProduct) => {
-        setAddNewProduct(addNewProduct);
-    })
-    .catch((error) => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
-}
+        body: JSON.stringify(addNewProduct),
+      })
+        .then((response) => {
+          if (response.status != 200) {
+            return response.json().then((errData) => {
+              throw new Error(
+                `POST response was not ok :\n Status:${response.status}. \n Error: ${errData.error}`
+              );
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          alert("Item added successfully!");
+        })
+        .catch((error) => {
+          console.error("Error adding item:", error);
+          alert("Error adding Product:" + error.message); // Display alert if there's an error
+        });
+    }; // end handleOnSubmit
+    //return
+    return (
+      <div>
+        {/* Buttons to show CRUD */}
+        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
+        <button onClick={() => navigate("/postcatalog")}>
+          POST a new Item
+        </button>
+        <button onClick={() => navigate("/putcatalog")}>
+          PUT (modify) an Item
+        </button>
+        <button onClick={() => navigate("/deletecatalog")}>
+          DELETE an Item
+        </button>
+        {/* Form to input data */}
+        <form onSubmit={handleSubmit}>
+          <h1>Post a New Product</h1>
+          <input
+            type="text"
+            name="id"
+            value={addNewProduct.id}
+            onChange={handleChange}
+            placeholder="ID"
+            required
+          />{" "}
+          <br />
+          <input
+            type="text"
+            name="title"
+            value={addNewProduct.title}
+            onChange={handleChange}
+            placeholder="Title"
+            required
+          />{" "}
+          <br />
+          <input
+            type="text"
+            name="price"
+            value={addNewProduct.price}
+            onChange={handleChange}
+            placeholder="Price"
+            required
+          />{" "}
+          <br />
+          <input
+            type="text"
+            name="description"
+            value={addNewProduct.description}
+            onChange={handleChange}
+            placeholder="Description"
+            required
+          />{" "}
+          <br />
+          <input
+            type="text"
+            name="category"
+            value={addNewProduct.category}
+            onChange={handleChange}
+            placeholder="Category"
+            required
+          />{" "}
+          <br />
+          <input
+            type="text"
+            name="image"
+            value={addNewProduct.image}
+            onChange={handleChange}
+            placeholder="Image URL"
+            required
+          />{" "}
+          <br />
+          {/* <input
+            type="text"
+            name="rating"
+            value={formData.rating}
+            onChange={handleChange}
+            placeholder="Rating"
+            required
+          />{" "}
+          <br /> */}
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    );
+  };
+  //
+  // PUT item
+  //
+  const Putcatalog = () => {
+    // Define hooks
+    const [id, setId] = useState("");
+    const [updatedData, setUpdatedData] = useState({});
+    const navigate = useNavigate();
 
-function deleteProd() {
-  // Fetch the value from the input field
-  let id = document.getElementById("deleteProductbyId").value;
-  console.log(id);
-  fetch(`http://localhost:8081/deleteProduct/${id}`, {
-    method: "DELETE",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ id: id })
-  })
-    .then((response) => response.json())
-    .then((delProd) => {
-      deleteProduct(delProd);
-    });
-}
+    // Function to handle PUT request
+    const handleUpdate = () => {
+      fetch(`http://localhost:8081/listProducts/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          console.log("Updated data:", data);
+        })
+        .catch((error) => {
+          console.error("Error updating data:", error);
+          alert("Error updating product:" + error.message);
+        });
+    };
 
+    // Return
+    return (
+      <div>
+        {/* Buttons to show CRUD */}
+        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
+        <button onClick={() => navigate("/postcatalog")}>
+          POST a new Item
+        </button>
+        <button onClick={() => navigate("/putcatalog")}>
+          PUT (modify) an Item
+        </button>
+        <button onClick={() => navigate("/deletecatalog")}>
+          DELETE an Item
+        </button>
+        <br />
+        <input
+          type="text"
+          placeholder="Enter ID"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+        />
+        <br />
+        {/* Input fields to update data */}
+        <input
+          type="text"
+          placeholder="Update Title"
+          onChange={(e) =>
+            setUpdatedData({ ...updatedData, title: e.target.value })
+          }
+        />
+        <input
+          type="text"
+          placeholder="Update Category"
+          onChange={(e) =>
+            setUpdatedData({ ...updatedData, category: e.target.value })
+          }
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Update Price"
+          onChange={(e) =>
+            setUpdatedData({ ...updatedData, price: e.target.value })
+          }
+        />
+        {/* <input
+          type="text"
+          placeholder="Update Rating"
+          onChange={(e) =>
+            setUpdatedData({ ...updatedData, rating: e.target.value })
+          }
+        />
+        <br /> */}
+        <button onClick={handleUpdate}>Update Item</button>
+      </div>
+    );
+  };
+  //
+  // DELETE - Delete an item
+  //
 
+  const Deletecatalog = () => {
+    const [delProd, setDeleteProduct] = useState([]);
+    const navigate = useNavigate();
+
+    function deleteProduct() {
+      // Fetch the value from the input field
+      let id = document.getElementById("deleteProductbyId").value;
+      console.log(id);
+      fetch(`http://localhost:8081/deleteProduct/${id}`, {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: id }),
+      })
+        .then((response) => response.json())
+        .then((delProd) => {
+          setDeleteProduct(delProd);
+        });
+    }
+    // return
+    return (
+      <div>
+        {/* Buttons to show CRUD */}
+        <button onClick={() => navigate("/getcatalog")}>GET Catalog</button>
+        <button onClick={() => navigate("/postcatalog")}>
+          POST a new Item
+        </button>
+        <button onClick={() => navigate("/putcatalog")}>
+          PUT (modify) an Item
+        </button>
+        <button onClick={() => navigate("/deletecatalog")}>
+          DELETE an Item
+        </button>
+        {/* Buttons to simulate carousel */}
+        {/* <h3>Delete one product:</h3>
+        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button onClick={() => getOneByOneProductNext()}>Next</button>
+        <button onClick={() => deleteOneProduct(products[index].id)}>
+          Delete
+        </button> */}
+        {/* Show product properties, one by one */}
+        <div>
+          <h3>Delete Product</h3>
+          <input
+            type="number"
+            id="deleteProductbyId"
+            placeholder="Enter Product ID"
+          />
+          <button onClick={() => deleteProduct()}>Delete Product</button>
+        </div>
+      </div>
+    );
+  };
   return (
-    <div>
-      <h1>Catalog of Products</h1>
-      <div>
-        <h3>Show all available Products.</h3>
-        <button onClick={() => getAllProducts()}>Show All ...</button>
-        {viewer1 && showAllItems}
-      </div>
-
-      <div>
-        <h3>Add New Product</h3>
-        <button onClick={() => newProduct()}>New Product</button>
-      </div>
-
-      <div>
-        <h3>Delete Product</h3>
-        <input type="number" id="deleteProductbyId" placeholder="Enter Product ID" />
-        <button onClick={() => deleteProd()}>Delete Product</button>
-      </div>
-    </div>
-  ); // return end
+    <Router>
+      <Routes>
+        <Route path="/getcatalog" element={<Getcatalog />} />
+        <Route path="/postcatalog" element={<Postcatalog />} />
+        <Route path="/putcatalog" element={<Putcatalog />} />
+        <Route path="/deletecatalog" element={<Deletecatalog />} />
+        <Route path="/" element={<Getcatalog />} /> {/* Default view */}
+      </Routes>
+    </Router>
+  );
 } // App end
 export default App;
-
-
-// fetch("http://localhost:8081/listProducts")
-//   .then((response) => response.json())
-//   .then((products) => loadProducts(products));
-  
-// function loadProducts(products) {
-//   var CardProduct = document.getElementById("col");
-
-//   var checkboxes = [];
-//   var cards = [];
-
-//   for (var i = 0; i < products.length; i++) {
-//     let id = products[i].id;
-//     let title = products[i].title;
-//     let price = products[i].price;
-//     let description = products[i].description;
-//     let category = products[i].category
-//     let image = products[i].image;
-
-//     let checkbox = "checkbox" + i.toString();
-//     let card = "card" + i.toString();
-
-//     let AddCardProduct = document.createElement("div");
-//     // add class = “col” to new division for Bootstrap
-//     AddCardProduct.classList.add("col");
-//     // create Bootstrap card
-//     AddCardProduct.innerHTML = `
-//         <input type="checkbox" id=${checkbox} class="form-check-input" checked>
-//         <label for=${checkbox} class="form-check-label">Show Image ${i}</label>
-//         <div id=${card} class="card shadow-sm">
-//         <div class="card shadow-sm">
-//         <img src=${image} class="card-img-top" alt="..."></img>
-//         <div class="card-body">
-//         <p class="card-text"> <strong>${id}</strong>, ${title} ${price}</p>
-//         <p>${description}</p>
-//         <p>${category}</p>
-//         <div class="d-flex justify-content-between align-items-center">
-//         </div>
-//         </div>
-//         </div>
-//         `;
-//     // append new division
-//     CardProduct.appendChild(AddCardProduct);
-
-//     let cbox = document.getElementById(checkbox);
-//     checkboxes.push(cbox);
-//     let ccard = document.getElementById(card);
-//     cards.push(ccard);
-
-//     console.log(checkbox);
-//     console.log(card);
-//   }
-
-//   console.log(checkboxes);
-//   console.log(cards);
-
-//   // Add event listeners to checkboxes to toggle card visibility
-//   checkboxes.forEach((checkboxParam, index) => {
-//     console.log(index);
-//     checkboxParam.addEventListener("change", () => {
-//       if (checkboxParam.checked) {
-//         cards[index].style.display = "block"; // Show the card
-//       } else {
-//         cards[index].style.display = "none"; // Hide the card
-//       }
-//     });
-//   });
-// }
-
-// function newProduct() {
-// //   fetch(`http://localhost:8081/addRobot`, {
-// //     method: "POST",
-// //     headers: { "content-type": "application/json" },
-// //     body: JSON.stringify({
-// //       id: 4,
-// //       name: "Robot Abraham ALDACO-GASTELUM",
-// //       price: 100.9,
-// //       description: "I robot is one example of an image for my exercise",
-// //       imageUrl: "https://robohash.org/Abraham",
-// //     }),
-// //   })
-// //     .then((response) => response.json())
-// //     .then((addThisRobot) => {
-// //       addOneRobot(addThisRobot);
-// //     });
-// }
-
-// function deleteProduct() {
-// //   // Fetch the value from the input field
-// //   let id = document.getElementById("deleteRobotById").value;
-// //   console.log(id);
-// //   fetch(`http://localhost:8081/deleteRobot/${id}`, {
-// //     method: "DELETE",
-// //     headers: { "content-type": "application/json" },
-// //     body: JSON.stringify({ id: id })
-// //   })
-// //     .then((response) => response.json())
-// //     .then((deleteThisRobot) => {
-// //       deleteOneRobotById(deleteThisRobot);
-// //     });
-// }
-
-// function updateProduct() {
-// //   // Fetch the value from the input field
-// //   let id = document.getElementById("updateRobotById").value;
-// //   console.log(id);
-// //   fetch(`http://localhost:8081/updateRobot/${id}`, {
-// //     method: "PUT",
-// //     headers: { "content-type": "application/json" },
-// //     body: JSON.stringify({
-// //       name: "Robot Abraham ALDACO-GASTELUM",
-// //       price: 100.9,
-// //       description: "I robot is one example of an image for my exercise",
-// //       imageUrl: "https://robohash.org/Abraham",
-// //     }),
-// //   })
-// //     .then((response) => response.json())
-// //     .then((updateThisRobot) => {
-// //       updateOneRobotById(updateThisRobot);
-// //     });
-// }
-
-// function getData() {
-//   var a = document.getElementById("input_id").value;
-//   var message = "user entered this value: " + a;
-
-//   document.getElementById("alert").innerHTML = a;
-// }
